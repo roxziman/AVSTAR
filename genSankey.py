@@ -282,8 +282,10 @@ def main() -> int:
     corpus = explode_df_by_sep(corpus, "Dataset Source", ",")
     # Exploded in regards to Visualization Source
     corpus = explode_df_by_sep(corpus, "Visualization Source", ",")
-    # Exploded in regards to Visualization Source
+    # Exploded in regards to Visualization Type Grouped
     corpus = explode_df_by_sep(corpus, "Vis Type Grouped", ",")
+    # Exploded in regards to Element(s) Modified
+    corpus = explode_df_by_sep(corpus, "Element(s) Modified", ",")
     print(corpus)
 
     # Parallel Sets (Sankey)
@@ -308,19 +310,29 @@ def main() -> int:
         .size()
         .reset_index(name='count')
     )
+    
+    links_vistype_elements = (
+        corpus
+        .groupby(['Vis Type Grouped', 'Element(s) Modified'])
+        .size()
+        .reset_index(name='count')
+    )
+
     # Build node labels, keeping axis groups separate to avoid label collisions
     domain_labels = [f"{d}" for d in corpus["Domain Application"].unique()]
     dataset_labels = [f"{d}" for d in corpus["Dataset Source"].unique()]
     visualization_source_labels = [f"{v}" for v in corpus["Visualization Source"].unique()]
     vis_type_labels = [f"{v}" for v in corpus["Vis Type Grouped"].unique()]
+    elements_mod_labels = [f"{v}" for v in corpus["Element(s) Modified"].unique()]
 
-    all_nodes = domain_labels + dataset_labels + visualization_source_labels + vis_type_labels
+    all_nodes = domain_labels + dataset_labels + visualization_source_labels + vis_type_labels + elements_mod_labels
 
     # Map each label to a unique node index
     domain_index = {label: i for i, label in enumerate(domain_labels)}
     dataset_index = {label: i + len(domain_labels) for i, label in enumerate(dataset_labels)}
     vissource_index = {label: i + len(domain_labels) + len(dataset_labels) for i, label in enumerate(visualization_source_labels)}
     vistype_index = {label: i + len(domain_labels) + len(dataset_labels) + len(visualization_source_labels) for i, label in enumerate(vis_type_labels)}
+    elements_index = {label: i + len(domain_labels) + len(dataset_labels) + len(visualization_source_labels) + len(vis_type_labels) for i, label in enumerate(elements_mod_labels)}
 
     # Build links for Domain -> Dataset
     sources = []
@@ -351,6 +363,15 @@ def main() -> int:
         if ds_label in vissource_index and v_label in vistype_index:
             sources.append(vissource_index[ds_label])
             targets.append(vistype_index[v_label])
+            values.append(int(row['count']))
+    
+    # Build links for Vis Type -> Element(s) Modified
+    for _, row in links_vistype_elements.iterrows():
+        ds_label = f"{row['Vis Type Grouped']}"
+        v_label = f"{row['Element(s) Modified']}"
+        if ds_label in vistype_index and v_label in elements_index:
+            sources.append(vistype_index[ds_label])
+            targets.append(elements_index[v_label])
             values.append(int(row['count']))
 
     sankey_fig = go.Figure(data=[go.Sankey(
