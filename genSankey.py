@@ -284,8 +284,8 @@ def main() -> int:
     corpus = explode_df_by_sep(corpus, "Visualization Source", ",")
     # Exploded in regards to Visualization Type Grouped
     corpus = explode_df_by_sep(corpus, "Vis Type Grouped", ",")
-    # Exploded in regards to Element(s) Modified
-    corpus = explode_df_by_sep(corpus, "Element(s) Modified", ",")
+    # Exploded in regards to Element(s) Modified Grouped
+    corpus = explode_df_by_sep(corpus, "Element(s) Modified Grouped", ",")
     print(corpus)
 
     # Parallel Sets (Sankey)
@@ -313,7 +313,7 @@ def main() -> int:
     
     links_vistype_elements = (
         corpus
-        .groupby(['Vis Type Grouped', 'Element(s) Modified'])
+        .groupby(['Vis Type Grouped', 'Element(s) Modified Grouped'])
         .size()
         .reset_index(name='count')
     )
@@ -323,7 +323,7 @@ def main() -> int:
     dataset_labels = [f"{d}" for d in corpus["Dataset Source"].unique()]
     visualization_source_labels = [f"{v}" for v in corpus["Visualization Source"].unique()]
     vis_type_labels = [f"{v}" for v in corpus["Vis Type Grouped"].unique()]
-    elements_mod_labels = [f"{v}" for v in corpus["Element(s) Modified"].unique()]
+    elements_mod_labels = [f"{v}" for v in corpus["Element(s) Modified Grouped"].unique()]
 
     all_nodes = domain_labels + dataset_labels + visualization_source_labels + vis_type_labels + elements_mod_labels
 
@@ -365,10 +365,10 @@ def main() -> int:
             targets.append(vistype_index[v_label])
             values.append(int(row['count']))
     
-    # Build links for Vis Type -> Element(s) Modified
+    # Build links for Vis Type -> Element(s) Modified Grouped
     for _, row in links_vistype_elements.iterrows():
         ds_label = f"{row['Vis Type Grouped']}"
-        v_label = f"{row['Element(s) Modified']}"
+        v_label = f"{row['Element(s) Modified Grouped']}"
         if ds_label in vistype_index and v_label in elements_index:
             sources.append(vistype_index[ds_label])
             targets.append(elements_index[v_label])
