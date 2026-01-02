@@ -276,8 +276,8 @@ def main() -> int:
     # STRICT filter: include ONLY rows where BN is exactly 'corpus'
     corpus = df[df['Exclude Decision'].str.strip() == 'corpus']
 
-    # Eploded in regards to Domain application
-    corpus = explode_df_by_sep(corpus, "Domain application", ",")
+    # Eploded in regards to Domain Application
+    corpus = explode_df_by_sep(corpus, "Domain Application", ",")
     # Eploded in regards to Dataset Source
     corpus = explode_df_by_sep(corpus, "Dataset Source", ",")
     # Eploded in regards to Visualization Source
@@ -288,7 +288,7 @@ def main() -> int:
     # Aggregate counts for adjacent pairs of axes
     links_domain_dataset = (
         corpus
-        .groupby(['Domain application', 'Dataset Source'])
+        .groupby(['Domain Application', 'Dataset Source'])
         .size()
         .reset_index(name='count')
     )
@@ -301,7 +301,7 @@ def main() -> int:
     )
 
     # Build node labels, keeping axis groups separate to avoid label collisions
-    domain_labels = [f"{d}" for d in corpus['Domain application'].unique()]
+    domain_labels = [f"{d}" for d in corpus['Domain Application'].unique()]
     dataset_labels = [f"{d}" for d in corpus["Dataset Source"].unique()]
     visualization_source_labels = [f"{v}" for v in corpus["Visualization Source"].unique()]
 
@@ -322,7 +322,7 @@ def main() -> int:
     values = []
 
     for _, row in links_domain_dataset.iterrows():
-        d_label = f"{row['Domain application']}"
+        d_label = f"{row['Domain Application']}"
         ds_label = f"{row['Dataset Source']}"
         if d_label in domain_index and ds_label in dataset_index:
             sources.append(domain_index[d_label])
