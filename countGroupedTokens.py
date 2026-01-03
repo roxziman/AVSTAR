@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """
-Count comma-separated tokens from column Z ("Specific Emotions") in a named Excel sheet.
+Count comma-separated tokens from a named column in a named Excel sheet, but ONLY for rows
+where "Exclude Decision" == "corpus", and print the total token count at the end.
 
 Steps:
 1) Open an Excel file
 2) Read a specific sheet by name
 3) Use row 2 as the header (ignore row 1)
-4) Extract column Z (labeled "Specific Emotions")
-5) Split by commas and count unique tokens (no stemming/tokenization)
-6) Print alphabetically: "token: count"
+4) Filter to rows with 'corpus' written under column "Exclude Decision" (strict match)
+5) Extract the target column (argument: column_name)
+6) Split by commas and count unique tokens (no stemming/tokenization)
+7) Print alphabetically: "token: count"
+8) Print total count of all tokens at the end
 """
 
 from __future__ import annotations
@@ -35,13 +38,12 @@ def count_comma_tokens(series: pd.Series) -> Counter:
 
     # Drop NaN; convert to string for safety
     for cell in series.dropna().astype(str):
-        # If the cell is an empty string, skip
         if not cell.strip():
             continue
 
         for tok in cell.split(","):
             tok = tok.strip()
-            if tok:  # ignore empty tokens
+            if tok:
                 counter[tok] += 1
 
     return counter
@@ -49,7 +51,7 @@ def count_comma_tokens(series: pd.Series) -> Counter:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Grouped counts of comma-separated tokens in column Z ('Specific Emotions') from a named Excel sheet."
+        description="Grouped counts of comma-separated tokens in a chosen column (corpus rows only) from a named Excel sheet."
     )
     parser.add_argument("excel_path", help="Path to the Excel file (.xlsx, .xlsm, etc.)")
     parser.add_argument("sheet_name", help="Name of the sheet to read")
@@ -63,7 +65,13 @@ def main() -> int:
     # Header is in row 2 => zero-based header index = 1
     df = pd.read_excel(excel_path, sheet_name=args.sheet_name, header=1)
 
-    # Ensure the expected column exists (as per your description)
+    # Required columns
+    if "Exclude Decision" not in df.columns:
+        raise KeyError(
+            "Column 'Exclude Decision' not found. "
+            f"Found columns: {list(df.columns)}"
+        )
+
     col_name = args.column_name
     if col_name not in df.columns:
         raise KeyError(
@@ -71,10 +79,19 @@ def main() -> int:
             f"Found columns: {list(df.columns)}"
         )
 
+    # 1) STRICT filter: ONLY rows where Exclude Decision == 'corpus' (case-insensitive, trimmed)
+    mask = df["Exclude Decision"].astype(str).str.strip().str.lower().eq("corpus")
+    df = df.loc[mask].copy()
+
     counts = count_comma_tokens(df[col_name])
 
+    # 2) Print alphabetical list
     for token in sorted(counts.keys()):
         print(f"{token}: {counts[token]}")
+
+    # 3) Print total count (sum of all token occurrences)
+    total_count = sum(counts.values())
+    print(f"TOTAL: {total_count}")
 
     return 0
 

@@ -276,12 +276,16 @@ def main() -> int:
     # STRICT filter: include ONLY rows where BN is exactly 'corpus'
     corpus = df[df['Exclude Decision'].str.strip() == 'corpus']
 
-    # Eploded in regards to Domain Application
+    # Exploded in regards to Domain Application
     corpus = explode_df_by_sep(corpus, "Domain Application", ",")
-    # Eploded in regards to Dataset Source
+    # Exploded in regards to Dataset Source
     corpus = explode_df_by_sep(corpus, "Dataset Source", ",")
-    # Eploded in regards to Visualization Source
+    # Exploded in regards to Visualization Source
     corpus = explode_df_by_sep(corpus, "Visualization Source", ",")
+    # Exploded in regards to Visualization Type Grouped
+    corpus = explode_df_by_sep(corpus, "Vis Type Grouped", ",")
+    # Exploded in regards to Element(s) Modified Grouped
+    corpus = explode_df_by_sep(corpus, "Element(s) Modified Grouped", ",")
     print(corpus)
 
     # Parallel Sets (Sankey)
@@ -293,28 +297,42 @@ def main() -> int:
         .reset_index(name='count')
     )
 
-    links_dataset_vis = (
+    links_dataset_vissource = (
         corpus
         .groupby(['Dataset Source', 'Visualization Source'])
         .size()
         .reset_index(name='count')
     )
 
+    links_vissource_vistype = (
+        corpus
+        .groupby(['Visualization Source', 'Vis Type Grouped'])
+        .size()
+        .reset_index(name='count')
+    )
+    
+    links_vistype_elements = (
+        corpus
+        .groupby(['Vis Type Grouped', 'Element(s) Modified Grouped'])
+        .size()
+        .reset_index(name='count')
+    )
+
     # Build node labels, keeping axis groups separate to avoid label collisions
-    domain_labels = [f"{d}" for d in corpus['Domain Application'].unique()]
+    domain_labels = [f"{d}" for d in corpus["Domain Application"].unique()]
     dataset_labels = [f"{d}" for d in corpus["Dataset Source"].unique()]
     visualization_source_labels = [f"{v}" for v in corpus["Visualization Source"].unique()]
+    vis_type_labels = [f"{v}" for v in corpus["Vis Type Grouped"].unique()]
+    elements_mod_labels = [f"{v}" for v in corpus["Element(s) Modified Grouped"].unique()]
 
-    print(domain_labels)
-    print(dataset_labels)
-    print(visualization_source_labels)
-
-    all_nodes = domain_labels + dataset_labels + visualization_source_labels
+    all_nodes = domain_labels + dataset_labels + visualization_source_labels + vis_type_labels + elements_mod_labels
 
     # Map each label to a unique node index
     domain_index = {label: i for i, label in enumerate(domain_labels)}
     dataset_index = {label: i + len(domain_labels) for i, label in enumerate(dataset_labels)}
-    vis_index = {label: i + len(domain_labels) + len(dataset_labels) for i, label in enumerate(visualization_source_labels)}
+    vissource_index = {label: i + len(domain_labels) + len(dataset_labels) for i, label in enumerate(visualization_source_labels)}
+    vistype_index = {label: i + len(domain_labels) + len(dataset_labels) + len(visualization_source_labels) for i, label in enumerate(vis_type_labels)}
+    elements_index = {label: i + len(domain_labels) + len(dataset_labels) + len(visualization_source_labels) + len(vis_type_labels) for i, label in enumerate(elements_mod_labels)}
 
     # Build links for Domain -> Dataset
     sources = []
@@ -330,12 +348,30 @@ def main() -> int:
             values.append(int(row['count']))
 
     # Build links for Dataset -> Visualization
-    for _, row in links_dataset_vis.iterrows():
+    for _, row in links_dataset_vissource.iterrows():
         ds_label = f"{row['Dataset Source']}"
         v_label = f"{row['Visualization Source']}"
-        if ds_label in dataset_index and v_label in vis_index:
+        if ds_label in dataset_index and v_label in vissource_index:
             sources.append(dataset_index[ds_label])
-            targets.append(vis_index[v_label])
+            targets.append(vissource_index[v_label])
+            values.append(int(row['count']))
+    
+    # Build links for Vis Source -> Vis Type
+    for _, row in links_vissource_vistype.iterrows():
+        ds_label = f"{row['Visualization Source']}"
+        v_label = f"{row['Vis Type Grouped']}"
+        if ds_label in vissource_index and v_label in vistype_index:
+            sources.append(vissource_index[ds_label])
+            targets.append(vistype_index[v_label])
+            values.append(int(row['count']))
+    
+    # Build links for Vis Type -> Element(s) Modified Grouped
+    for _, row in links_vistype_elements.iterrows():
+        ds_label = f"{row['Vis Type Grouped']}"
+        v_label = f"{row['Element(s) Modified Grouped']}"
+        if ds_label in vistype_index and v_label in elements_index:
+            sources.append(vistype_index[ds_label])
+            targets.append(elements_index[v_label])
             values.append(int(row['count']))
 
     sankey_fig = go.Figure(data=[go.Sankey(
@@ -354,7 +390,7 @@ def main() -> int:
         )
     )])
 
-    sankey_fig.update_layout(title_text="Parallel Sets: Domain → Dataset Source → Visualization Source (thickness = count)", font_size=10)
+    sankey_fig.update_layout(title_text="Parallel Sets: Domain → Dataset Source → Visualization Source → Visualization Type (thickness = count)", font_size=10)
     sankey_fig.write_html("fig/parallel_sets.html")
 
 if __name__ == "__main__":
