@@ -72,7 +72,7 @@ def main() -> int:
 
     df = pd.read_excel(excel_path, sheet_name=args.sheet_name, header=1)
 
-    required_cols = ["Exclude Decision", "NEW KEY", args.column_name]
+    required_cols = ["Exclude Decision", "BibTex Key", args.column_name]
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
         raise KeyError(f"Missing required column(s): {missing}. Found columns: {list(df.columns)}")
@@ -81,37 +81,68 @@ def main() -> int:
     mask = df["Exclude Decision"].astype(str).str.strip().str.lower().eq("corpus")
     df = df.loc[mask].copy()
 
-    counts, token_to_keys = count_tokens_and_map_keys(df[args.column_name], df["NEW KEY"])
+    counts, token_to_keys = count_tokens_and_map_keys(df[args.column_name], df["BibTex Key"])
 
-    # Header row (TSV)
-    print("Token (count)\tPapers in Corpus (NEW KEY)")
+    # Prepare output filename
+    tables_dir = Path("tables")
+    tables_dir.mkdir(exist_ok=True)
+    output_file = tables_dir / f"{args.column_name}.tex"
+    
+    # Build LaTeX table
+    lines = []
+    lines.append("\\begin{tabular}{ll}")
+    lines.append("\\toprule")
+    lines.append(f"{args.column_name} (count) & Papers in Corpus \\\\")
+    lines.append("\\midrule")
 
-    # --- Pinned rows at top, in the specified order ---
-    for tok in PINNED_TOKENS:
-        cnt = int(counts.get(tok, 0))
-        keys_str = ", ".join(sorted(token_to_keys.get(tok, set())))
-        print(f"{tok} ({cnt})\t{keys_str}")
+    # --- Apply pinned token approach only for Journal column ---
+    if args.column_name == "Journal":
+        # --- Pinned rows at top, in the specified order ---
+        for tok in PINNED_TOKENS:
+            cnt = int(counts.get(tok, 0))
+            keys = sorted(token_to_keys.get(tok, set()))
+            keys_str = ", ".join([f"{{{k}}}" for k in keys])
+            lines.append(f"{tok} ({cnt}) & {keys_str} \\\\")
 
-    # --- Collapse remaining tokens into "Other" ---
-    remaining = [t for t in counts.keys() if t not in PINNED_TOKENS]
+        # --- Collapse remaining tokens into "Other" ---
+        remaining = [t for t in counts.keys() if t not in PINNED_TOKENS]
 
-    # Order remaining tokens by count desc (ties alpha) for grouping requirement,
-    # but the "Other: name (#), ..." string must be alphabetical per your spec.
-    # So: counts ordering governs *which tokens are "remaining"*, while display is alphabetical.
-    remaining_alpha = sorted(remaining)
+        # Order remaining tokens by count desc (ties alpha) for grouping requirement,
+        # but the "Other: name (#), ..." string must be alphabetical per your spec.
+        # So: counts ordering governs *which tokens are "remaining"*, while display is alphabetical.
+        remaining_alpha = sorted(remaining)
 
-    other_label_parts = [f"{t} ({int(counts[t])})" for t in remaining_alpha]
-    other_label = "Other"
-    if other_label_parts:
-        other_label += ": " + ", ".join(other_label_parts)
+        other_label_parts = [f"{t} ({int(counts[t])})" for t in remaining_alpha]
+        other_label = "Other"
+        if other_label_parts:
+            other_label += ": " + ", ".join(other_label_parts)
 
-    other_keys: Set[str] = set()
-    for t in remaining:
-        other_keys.update(token_to_keys.get(t, set()))
-    other_keys_str = ", ".join(sorted(other_keys))
+        other_keys: Set[str] = set()
+        for t in remaining:
+            other_keys.update(token_to_keys.get(t, set()))
+        other_keys_list = sorted(other_keys)
+        other_keys_str = ", ".join([f"{{{k}}}" for k in other_keys_list])
 
-    # If there are no remaining tokens, still emit an Other row (empty)
-    print(f"{other_label}\t{other_keys_str}")
+        # If there are no remaining tokens, still emit an Other row (empty)
+        lines.append(f"{other_label} & {other_keys_str} \\\\")
+    else:
+        # For other columns, just output all tokens sorted by count (desc), then alphabetically
+        sorted_tokens = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+        for token, cnt in sorted_tokens:
+            keys = sorted(token_to_keys.get(token, set()))
+            keys_str = ", ".join([k for k in keys])
+            lines.append(f"{token} ({int(cnt)}) & \\ref{{{keys_str}}} \\\\")
+
+    lines.append("\\bottomrule")
+    lines.append("\\end{tabular}")
+    
+    # Print to stdout
+    for line in lines:
+        print(line)
+    
+    # Save to file
+    output_file.write_text("\n".join(lines) + "\n")
+    print(f"\n% Saved to {output_file}", file=__import__('sys').stderr)
 
     return 0
 
