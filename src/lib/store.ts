@@ -10,7 +10,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import counterReducer from "@/lib/features/counter/counterSlice";
+import exampleReducer from "@/lib/features/example/exampleSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,12 +20,12 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(
   persistConfig,
-  counterReducer
+  exampleReducer
 );
 
 export const store = configureStore({
   reducer: {
-    counter: persistedReducer,
+    example: persistedReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
