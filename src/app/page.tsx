@@ -4,20 +4,18 @@ import {
   reset,
   setValue,
 } from "@/lib/features/example/exampleSlice";
+import Button from "@/lib/features/ui/Button";
 import Checkbox from "@/lib/features/ui/Checkbox";
 import Input from "@/lib/features/ui/Input";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { log } from "node:console";
 import { useState } from "react";
 
 export default function Home() {
   const dispatch = useAppDispatch();
   const value = useAppSelector((state) => state.example.value);
   const [check, setCheck] = useState(false);
-  const [textValue, setTextValue] = useState("");
-
-  console.log("Text", textValue);
-
+  const [textValue, setTextValue] = useState<string | number | null>(null);
+  const [ageValue, setAgeValue] = useState<string | number | null>(null);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-6 py-16 text-zinc-900">
@@ -43,13 +41,14 @@ export default function Home() {
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <button
+            <Button label="Update" onClick={() => dispatch(setValue(textValue as string))} />
+            {/* <button
               className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800"
-              onClick={() => dispatch(setValue(textValue))}
+              onClick={}
               type="button"
             >
               Update
-            </button>
+            </button> */}
             <button
               className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:border-red-300 hover:bg-red-50"
               onClick={() => dispatch(reset())}
@@ -60,7 +59,8 @@ export default function Home() {
           </div>
           <div className="flex flex-col gap-2">
             <Checkbox label={"Checkbox Test"} checked={check} setChecked={setCheck} />
-            <Input value={textValue} setValue={setTextValue} description={"Write your name."} />
+            <Input type="text" label={"Name"} value={textValue} setValue={setTextValue} description={"Write your name."} />
+            <Input type="number" label={"Age"} value={ageValue} setValue={setAgeValue} description={"Write your age."} />
           </div>
         </section>
       </main>
