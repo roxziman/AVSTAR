@@ -527,22 +527,21 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                                         placeholder="Filter"
                                                     />
                                                 ) : definition.filterType === "feature" ? (
-                                                    <></>
-                                                    // <select
-                                                    //     className="filter-select"
-                                                    //     value={featureFilters[columnId] ?? "all"}
-                                                    //     onChange={(event) =>
-                                                    //         setFeatureFilters((prev) => ({
-                                                    //             ...prev,
-                                                    //             [columnId]: event.target.value as FeatureFilter,
-                                                    //         }))
-                                                    //     }
-                                                    //     onClick={(event) => event.stopPropagation()}
-                                                    // >
-                                                    //     <option value="all">All</option>
-                                                    //     <option value="x">X</option>
-                                                    //     <option value="empty">Empty</option>
-                                                    // </select>
+                                                    <select
+                                                        className={`filter-select ${((featureFilters[columnId] ?? "all") !== "all") ? "filter-select-active" : ""}`}
+                                                        value={featureFilters[columnId] ?? "all"}
+                                                        onChange={(event) =>
+                                                            setFeatureFilters((prev) => ({
+                                                                ...prev,
+                                                                [columnId]: event.target.value as FeatureFilter,
+                                                            }))
+                                                        }
+                                                        onClick={(event) => event.stopPropagation()}
+                                                    >
+                                                        <option value="all">All</option>
+                                                        <option value="x">X</option>
+                                                        <option value="empty">Empty</option>
+                                                    </select>
                                                 ) : null}
                                             </th>
                                         );
@@ -658,10 +657,10 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           cursor: default;
         }
         .dense-table td {
-          height: 20px;
+          height: 18px;
         //   padding: 1px 4px;
           font-size: 0.8rem;
-          line-height: 0.9rem;
+          line-height: 0.8rem;
         }
         .col {
           max-width: 350px;
@@ -709,6 +708,10 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           font-size: 0.72rem;
           color: #1f2937;
           padding: 0 6px;
+        }
+        .filter-select-active {
+          background: #dbeafe;
+          border-color: #93c5fd;
         }
         .filter-input:focus,
         .filter-select:focus {
