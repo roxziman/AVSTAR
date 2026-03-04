@@ -163,6 +163,7 @@ def main(argv: list[str] | None = None) -> int:
 
     selected = df[actual_columns].copy()
     selected.columns = desired_columns
+    selected = selected.where(pd.notna(selected), None)
 
     records = selected.to_dict(orient="records")
     records = clean_records(records)

@@ -3,7 +3,7 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-type FeatureFilter = "all" | "yes" | "empty";
+type FeatureFilter = "all" | "X" | "empty";
 type CorpusRow = Record<string, string | null>;
 
 type ResizeState = {
@@ -45,7 +45,7 @@ function normalizeValue(value: string | null): string {
 }
 
 function hasYes(value: string | null): boolean {
-    return normalizeValue(value) === "yes";
+    return normalizeValue(value) === "x";
 }
 
 function hasLow(value: string | null): boolean {
@@ -539,7 +539,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                                         onClick={(event) => event.stopPropagation()}
                                                     >
                                                         <option value="all">All</option>
-                                                        <option value="yes">Yes</option>
+                                                        <option value="x">X</option>
                                                         <option value="empty">Empty</option>
                                                     </select>
                                                 ) : null}
