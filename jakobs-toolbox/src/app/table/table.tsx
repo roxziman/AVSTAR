@@ -4,6 +4,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type SortDirection = "asc" | "desc";
+type SortRule = { columnId: string; direction: SortDirection };
 type FeatureFilter = "all" | "yes" | "low" | "empty";
 type CorpusRow = Record<string, string | null>;
 
@@ -111,8 +112,9 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
   const [error, setError] = useState<string | null>(null);
   const [hoveredColumnId, setHoveredColumnId] = useState<string | null>(null);
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
-  const [sortColumnId, setSortColumnId] = useState<string>(guidingColumnId);
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [sortRules, setSortRules] = useState<SortRule[]>(
+    guidingColumnId ? [{ columnId: guidingColumnId, direction: "asc" }] : []
+  );
   const [columnOrder, setColumnOrder] = useState<string[]>(normalizedColumns.map((column) => column.id));
   const [draggedColumnId, setDraggedColumnId] = useState<string | null>(null);
   const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() =>
@@ -146,7 +148,14 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
 
   useEffect(() => {
     setColumnOrder(normalizedColumns.map((column) => column.id));
-    setSortColumnId((prev) => (normalizedColumns.some((column) => column.id === prev) ? prev : guidingColumnId));
+    setSortRules((prev) => {
+      const validColumnIds = new Set(normalizedColumns.map((column) => column.id));
+      const next = prev.filter((rule) => validColumnIds.has(rule.columnId));
+      if (next.length === 0 && guidingColumnId) {
+        return [{ columnId: guidingColumnId, direction: "asc" }];
+      }
+      return next;
+    });
     setColumnWidths((prev) => {
       const next: Record<string, number> = {};
       for (const column of normalizedColumns) {
@@ -259,22 +268,24 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
   }, [rows, guidingFilter, guidingColumnId, columnOrder, columnsById, featureFilters, getCellText]);
 
   const sortedRows = useMemo(() => {
-    if (!sortColumnId) {
+    if (sortRules.length === 0) {
       return filteredRows;
     }
 
     const sorted = [...filteredRows].sort((a, b) => {
-      const aValue = normalizeValue(getCellText(a, sortColumnId));
-      const bValue = normalizeValue(getCellText(b, sortColumnId));
-      return aValue.localeCompare(bValue);
+      for (const rule of sortRules) {
+        const aValue = normalizeValue(getCellText(a, rule.columnId));
+        const bValue = normalizeValue(getCellText(b, rule.columnId));
+        const comparison = aValue.localeCompare(bValue);
+        if (comparison !== 0) {
+          return rule.direction === "asc" ? comparison : -comparison;
+        }
+      }
+      return 0;
     });
 
-    if (sortDirection === "desc") {
-      sorted.reverse();
-    }
-
     return sorted;
-  }, [filteredRows, sortColumnId, sortDirection, getCellText]);
+  }, [filteredRows, sortRules, getCellText]);
 
   const groupedHeaderSegments = useMemo(() => {
     const segments: { label: string; span: number; color: string }[] = [];
@@ -337,13 +348,35 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
       hoveredColumnId !== guidingColumnId &&
       columnsById[hoveredColumnId]?.filterType === "feature");
 
-  const handleSort = (columnId: string) => {
-    if (sortColumnId === columnId) {
-      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
-      return;
-    }
-    setSortColumnId(columnId);
-    setSortDirection("asc");
+  const handleSort = (columnId: string, additive: boolean) => {
+    setSortRules((prev) => {
+      const existingIndex = prev.findIndex((rule) => rule.columnId === columnId);
+
+      if (!additive) {
+        if (existingIndex === 0 && prev.length === 1) {
+          return [{ columnId, direction: prev[0].direction === "asc" ? "desc" : "asc" }];
+        }
+        const existingDirection = existingIndex >= 0 ? prev[existingIndex].direction : "asc";
+        return [{ columnId, direction: existingDirection === "asc" ? "desc" : "asc" }];
+      }
+
+      if (existingIndex < 0) {
+        return [...prev, { columnId, direction: "asc" }];
+      }
+
+      const existingRule = prev[existingIndex];
+      if (existingRule.direction === "asc") {
+        const next = [...prev];
+        next[existingIndex] = { ...existingRule, direction: "desc" };
+        return next;
+      }
+
+      const next = prev.filter((rule) => rule.columnId !== columnId);
+      if (next.length === 0 && guidingColumnId) {
+        return [{ columnId: guidingColumnId, direction: "asc" }];
+      }
+      return next;
+    });
   };
 
   const moveColumn = (fromId: string, toId: string) => {
@@ -422,7 +455,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                         className={`w-full col col-${columnId} ${draggedColumnId === columnId ? "column-dragging" : ""}`}
                         onMouseEnter={() => setHoveredColumnId(columnId)}
                         onMouseLeave={() => setHoveredColumnId(null)}
-                        onClick={() => handleSort(columnId)}
+                        onClick={(event) => handleSort(columnId, event.shiftKey)}
                         onDragStart={(event) => {
                           event.dataTransfer.effectAllowed = "move";
                           setDraggedColumnId(columnId);
@@ -452,12 +485,23 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                           }}
                         />
                         <div className="flex flex-col gap-2 justify-center items-center p-2">
-                          {sortColumnId === columnId &&
-                            (sortDirection === "asc" ? (
-                              <ArrowUpIcon className="size-3" />
-                            ) : (
-                              <ArrowDownIcon className="size-3" />
-                            ))}
+                          {(() => {
+                            const sortIndex = sortRules.findIndex((rule) => rule.columnId === columnId);
+                            if (sortIndex < 0) {
+                              return null;
+                            }
+                            const direction = sortRules[sortIndex].direction;
+                            return (
+                              <span className="sort-indicator">
+                                {direction === "asc" ? (
+                                  <ArrowUpIcon className="size-3" />
+                                ) : (
+                                  <ArrowDownIcon className="size-3" />
+                                )}
+                                <span className="sort-rank">{sortIndex + 1}</span>
+                              </span>
+                            );
+                          })()}
                           <span className="vertical-label">{definition.label}</span>
                         </div>
                       </th>
@@ -638,6 +682,16 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           white-space: nowrap;
           font-weight: 700;
           line-height: 1.1;
+        }
+        .sort-indicator {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+        }
+        .sort-rank {
+          font-size: 0.65rem;
+          font-weight: 700;
+          line-height: 1;
         }
         .highlight-mode tr:not(.row-highlighted) td {
           opacity: 0.4;
