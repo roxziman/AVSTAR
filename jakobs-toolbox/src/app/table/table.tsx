@@ -14,18 +14,29 @@ type ResizeState = {
 };
 
 export type DataTableColumn = {
+  dataKey: string;
+  minWidth?: number;
+  initialWidth?: number;
+  filterType: "text" | "feature";
+};
+
+export type DataTableGroup = {
+  name: string;
+  color: string;
+  columns: DataTableColumn[];
+};
+
+type ResolvedDataTableColumn = DataTableColumn & {
   id: string;
   label: string;
-  group: string;
-  dataKey: string;
+  groupName: string;
+  groupColor: string;
   minWidth: number;
   initialWidth: number;
-  filterType: "text" | "feature";
-  color?: string;
 };
 
 type DataTableProps = {
-  columns: DataTableColumn[];
+  groups: DataTableGroup[];
   dataUrl: string;
   title: string;
 };
@@ -53,21 +64,40 @@ function matchesFeatureFilter(value: string | null, filter: FeatureFilter): bool
   return normalized === filter;
 }
 
-export default function Table({ columns, dataUrl, title }: DataTableProps) {
+function toColumnId(dataKey: string): string {
+  return dataKey.replace(/\s+/g, "");
+}
+
+const DEFAULT_MIN_WIDTH = 42;
+const DEFAULT_INITIAL_WIDTH = 52;
+
+export default function Table({ groups, dataUrl, title }: DataTableProps) {
   const normalizedColumns = useMemo(() => {
     const seen = new Set<string>();
-    return columns.filter((column) => {
-      if (!column?.id || seen.has(column.id)) {
-        return false;
+    return groups.reduce<ResolvedDataTableColumn[]>((acc, group) => {
+      for (const column of group.columns) {
+        const id = toColumnId(column.dataKey);
+        if (!id || seen.has(id)) {
+          continue;
+        }
+        seen.add(id);
+        acc.push({
+          ...column,
+          id,
+          label: column.dataKey,
+          groupName: group.name,
+          groupColor: group.color,
+          minWidth: column.minWidth ?? DEFAULT_MIN_WIDTH,
+          initialWidth: column.initialWidth ?? DEFAULT_INITIAL_WIDTH,
+        });
       }
-      seen.add(column.id);
-      return true;
-    });
-  }, [columns]);
+      return acc;
+    }, []);
+  }, [groups]);
 
-  const columnsById = useMemo<Record<string, DataTableColumn>>(
+  const columnsById = useMemo<Record<string, ResolvedDataTableColumn>>(
     () =>
-      normalizedColumns.reduce<Record<string, DataTableColumn>>((acc, column) => {
+      normalizedColumns.reduce<Record<string, ResolvedDataTableColumn>>((acc, column) => {
         acc[column.id] = column;
         return acc;
       }, {}),
@@ -247,17 +277,17 @@ export default function Table({ columns, dataUrl, title }: DataTableProps) {
   }, [filteredRows, sortColumnId, sortDirection, getCellText]);
 
   const groupedHeaderSegments = useMemo(() => {
-    const segments: { label: string; span: number }[] = [];
+    const segments: { label: string; span: number; color: string }[] = [];
     for (const columnId of columnOrder) {
       const definition = columnsById[columnId];
       if (!definition) {
         continue;
       }
       const last = segments[segments.length - 1];
-      if (last && last.label === definition.group) {
+      if (last && last.label === definition.groupName) {
         last.span += 1;
       } else {
-        segments.push({ label: definition.group, span: 1 });
+        segments.push({ label: definition.groupName, span: 1, color: definition.groupColor });
       }
     }
     return segments;
@@ -372,6 +402,7 @@ export default function Table({ columns, dataUrl, title }: DataTableProps) {
                       key={`${segment.label}-${segment.span}-${index}`}
                       colSpan={segment.span}
                       className="group-th"
+                      style={{ background: segment.color }}
                     >
                       <span className="group-label">{segment.label}</span>
                     </th>
@@ -495,8 +526,8 @@ export default function Table({ columns, dataUrl, title }: DataTableProps) {
                         <td key={`${columnId}-${index}`} className={`col col-${columnId}`}>
                           {columnId === guidingColumnId
                             ? value
-                            : definition.filterType === "feature" && definition.color
-                              ? renderLevelBox(value, definition.color)
+                            : definition.filterType === "feature"
+                              ? renderLevelBox(value, definition.groupColor)
                               : value}
                         </td>
                       );
