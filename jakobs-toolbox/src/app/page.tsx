@@ -65,7 +65,7 @@ export default function Home() {
         </section>
         <section className="border-t mt-4 pt-2">
           <h1 className="text-3xl font-semibold tracking-tight">Extra Pages</h1>
-          <a className="text-blue-500" href="/table-test">Table Test</a>
+          <a className="text-blue-500" href="/table">Table Test</a>
         </section>
       </main>
     </div>

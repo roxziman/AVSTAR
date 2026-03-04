@@ -70,7 +70,7 @@ function getColumnGroup(column: ColumnId): "Studies" | "Features" {
     return "Features";
 }
 
-export default function TableTestPage() {
+export default function Table() {
     const [rows, setRows] = useState<CorpusRow[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -391,7 +391,7 @@ export default function TableTestPage() {
                                 {sortedRows.map((row, index) => (
                                     <tr
                                         key={`${row["BibTex Key"] ?? "row"}-${index}`}
-                                        className={isRowHighlighted(row, index) ? "row-highlighted" : ""}
+                                        className={`${hoveredRow === index ? "row-highlighted-mouse" : ""} ${isRowHighlighted(row, index) ? "row-highlighted" : ""}`}
                                         onMouseEnter={() => setHoveredRow(index)}
                                         onMouseLeave={() => setHoveredRow(null)}
                                     >
@@ -513,6 +513,9 @@ export default function TableTestPage() {
                     white-space: nowrap;
                     font-weight: 700;
                     line-height: 1.1;
+                }
+                .row-highlighted-mouse {
+                    background: rgba(25, 118, 210, 0.14);
                 }
                 .highlight-mode tr:not(.row-highlighted) td {
                     opacity: 0.4;
