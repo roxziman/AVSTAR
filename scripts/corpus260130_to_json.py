@@ -8,6 +8,9 @@ import re
 import sys
 from pathlib import Path
 from urllib.parse import urlparse
+import ssl
+import certifi
+import urllib.request
 
 
 def normalize_col_name(name: object) -> str:
@@ -87,11 +90,45 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  Details: {e}", file=sys.stderr)
         return 2
 
-    desired_columns = ["BibTex Key", "Interactivity", "Animation"]
+    desired_columns = ["AuthorYear",
+                       "Paper Nickname",
+                       "Agnostic",
+                       "Medicine",
+                       "Public Health",
+                       "Social/Civic",
+                       "Business/Industry",
+                       "Climate",
+                       "Science Education",
+                       "Journalism",
+                       "Culture/Humanities",
+                       "Various",
+                       "Negative",
+                       "Neutral",
+                       "Positive",
+                       "Chart",
+                       "Graph",
+                       "Tree",
+                       "Set",
+                       "Map",
+                       "Pictograph",
+                       "Word Cloud",
+                       "Image",
+                       "Scientific Illustration",
+                       "Video",
+                       "Infographic",
+                       "Dashboard",
+                       "Multiple",
+                       "Interactivity",
+                       "Animation"
+                       ]
 
     try:
         csv_url = google_sheets_csv_url(args.input_url.strip(), args.sheet_name.strip())
-        df = pd.read_csv(csv_url)
+        ssl_context = ssl.create_default_context(cafile=certifi.where())
+        with urllib.request.urlopen(csv_url, context=ssl_context) as response:
+            csv_data = response.read().decode("utf-8")
+        from io import StringIO
+        df = pd.read_csv(StringIO(csv_data))
     except Exception as e:
         print(
             "ERROR: Failed to load Google Sheet as CSV. Ensure the sheet is accessible "

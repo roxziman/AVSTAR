@@ -4,7 +4,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 type SortDirection = "asc" | "desc";
-type FeatureFilter = "all" | "yes" | "low" | "empty";
+type FeatureFilter = "all" | "yes" | "empty";
 type CorpusRow = Record<string, string | null>;
 
 type ResizeState = {
@@ -467,7 +467,6 @@ export default function Table({ columns, dataUrl, title }: DataTableProps) {
                           >
                             <option value="all">All</option>
                             <option value="yes">Yes</option>
-                            <option value="low">Low</option>
                             <option value="empty">Empty</option>
                           </select>
                         ) : null}
@@ -515,7 +514,8 @@ export default function Table({ columns, dataUrl, title }: DataTableProps) {
           background: #f5f7fa;
         }
         .container {
-          max-width: 320px;
+          // max-width: 320px;
+          width: min-content;
           margin: 0 auto;
         }
         .title {
