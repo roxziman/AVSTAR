@@ -41,7 +41,7 @@ type DataTableProps = {
 };
 
 function normalizeValue(value: string | null): string {
-    return (value ?? "").trim().toLowerCase();
+    return (value?.toString() ?? "").trim().toLowerCase();
 }
 
 function hasYes(value: string | null): boolean {
@@ -122,7 +122,15 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
         }, {})
     );
     const [resizeState, setResizeState] = useState<ResizeState | null>(null);
-    const [guidingFilter, setGuidingFilter] = useState("");
+    const [textFilters, setTextFilters] = useState<Record<string, string>>(() => {
+        const initial: Record<string, string> = {};
+        for (const column of normalizedColumns) {
+            if (column.filterType === "text") {
+                initial[column.id] = "";
+            }
+        }
+        return initial;
+    });
     const [featureFilters, setFeatureFilters] = useState<Record<string, FeatureFilter>>(() => {
         const initial: Record<string, FeatureFilter> = {};
         for (const column of normalizedColumns) {
@@ -166,6 +174,15 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
             for (const column of normalizedColumns) {
                 if (column.id !== guidingColumnId && column.filterType === "feature") {
                     next[column.id] = prev[column.id] ?? "all";
+                }
+            }
+            return next;
+        });
+        setTextFilters((prev) => {
+            const next: Record<string, string> = {};
+            for (const column of normalizedColumns) {
+                if (column.filterType === "text") {
+                    next[column.id] = prev[column.id] ?? "";
                 }
             }
             return next;
@@ -240,12 +257,24 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
     const rowCount = useMemo(() => rows.length, [rows]);
 
     const filteredRows = useMemo(() => {
-        const guidingQuery = guidingFilter.trim().toLowerCase();
-
         return rows.filter((row) => {
-            if (guidingColumnId) {
-                const guidingValue = getCellText(row, guidingColumnId).toLowerCase();
-                if (guidingQuery && !guidingValue.includes(guidingQuery)) {
+            for (const columnId of columnOrder) {
+                const definition = columnsById[columnId];
+                if (!definition) {
+                    continue;
+                }
+
+                if (definition.filterType !== "text") {
+                    continue;
+                }
+
+                const query = (textFilters[columnId]?.toString() ?? "").trim().toLowerCase();
+                if (!query) {
+                    continue;
+                }
+
+                const value = getCellText(row, columnId).toLowerCase();
+                if (!value.includes(query)) {
                     return false;
                 }
             }
@@ -263,7 +292,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
 
             return true;
         });
-    }, [rows, guidingFilter, guidingColumnId, columnOrder, columnsById, featureFilters, getCellText]);
+    }, [rows, columnOrder, columnsById, featureFilters, textFilters, getCellText, guidingColumnId]);
 
     const sortedRows = useMemo(() => {
         if (sortRules.length === 0) {
@@ -513,16 +542,19 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                             return null;
                                         }
 
-                                        const isGuidingColumn = columnId === guidingColumnId;
-
                                         return (
                                             <th key={`filter-${columnId}`} className={`col col-${columnId}`}>
-                                                {isGuidingColumn ? (
+                                                {definition.filterType === "text" ? (
                                                     <input
                                                         className="filter-input"
                                                         type="text"
-                                                        value={guidingFilter}
-                                                        onChange={(event) => setGuidingFilter(event.target.value)}
+                                                        value={textFilters[columnId] ?? ""}
+                                                        onChange={(event) =>
+                                                            setTextFilters((prev) => ({
+                                                                ...prev,
+                                                                [columnId]: event.target.value,
+                                                            }))
+                                                        }
                                                         onClick={(event) => event.stopPropagation()}
                                                         placeholder="Filter"
                                                     />
