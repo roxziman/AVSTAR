@@ -67,8 +67,8 @@ function toColumnId(dataKey: string): string {
     return dataKey.replace(/\s+/g, "");
 }
 
-const DEFAULT_MIN_WIDTH = 42;
-const DEFAULT_INITIAL_WIDTH = 52;
+const DEFAULT_MIN_WIDTH = 22;
+const DEFAULT_INITIAL_WIDTH = 22;
 
 export default function Table({ groups, dataUrl, title }: DataTableProps) {
     const normalizedColumns = useMemo(() => {
@@ -311,8 +311,8 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
             <div
                 className="level-box"
                 style={{
-                    width: 14,
-                    height: 14,
+                    width: 10,
+                    height: 10,
                     borderRadius: 2,
                     backgroundColor: color,
                     opacity: hasLow(value) ? 0.35 : 1,
@@ -482,7 +482,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                                         });
                                                     }}
                                                 />
-                                                <div className="flex flex-col gap-2 justify-center items-center p-2">
+                                                <div className="flex flex-col gap-2 justify-center items-center">
                                                     {(() => {
                                                         const sortIndex = sortRules.findIndex((rule) => rule.columnId === columnId);
                                                         if (sortIndex < 0) {
@@ -527,21 +527,22 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                                         placeholder="Filter"
                                                     />
                                                 ) : definition.filterType === "feature" ? (
-                                                    <select
-                                                        className="filter-select"
-                                                        value={featureFilters[columnId] ?? "all"}
-                                                        onChange={(event) =>
-                                                            setFeatureFilters((prev) => ({
-                                                                ...prev,
-                                                                [columnId]: event.target.value as FeatureFilter,
-                                                            }))
-                                                        }
-                                                        onClick={(event) => event.stopPropagation()}
-                                                    >
-                                                        <option value="all">All</option>
-                                                        <option value="x">X</option>
-                                                        <option value="empty">Empty</option>
-                                                    </select>
+                                                    <></>
+                                                    // <select
+                                                    //     className="filter-select"
+                                                    //     value={featureFilters[columnId] ?? "all"}
+                                                    //     onChange={(event) =>
+                                                    //         setFeatureFilters((prev) => ({
+                                                    //             ...prev,
+                                                    //             [columnId]: event.target.value as FeatureFilter,
+                                                    //         }))
+                                                    //     }
+                                                    //     onClick={(event) => event.stopPropagation()}
+                                                    // >
+                                                    //     <option value="all">All</option>
+                                                    //     <option value="x">X</option>
+                                                    //     <option value="empty">Empty</option>
+                                                    // </select>
                                                 ) : null}
                                             </th>
                                         );
@@ -658,13 +659,13 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
         }
         .dense-table td {
           height: 20px;
-          padding: 1px 4px;
+        //   padding: 1px 4px;
           font-size: 0.8rem;
-          line-height: 1.1;
+          line-height: 0.9rem;
         }
         .col {
           max-width: 350px;
-          min-width: 30px;
+          min-width: 10px;
           text-align: left;
           white-space: nowrap;
           overflow: hidden;
@@ -680,6 +681,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           white-space: nowrap;
           font-weight: 700;
           line-height: 1.1;
+          font-size: small;
         }
         .sort-indicator {
           display: flex;
