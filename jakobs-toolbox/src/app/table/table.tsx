@@ -273,7 +273,7 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                     continue;
                 }
 
-                const value = getCellText(row, columnId).toLowerCase();
+                const value = getCellText(row, columnId).toString().toLowerCase();
                 if (!value.includes(query)) {
                     return false;
                 }
