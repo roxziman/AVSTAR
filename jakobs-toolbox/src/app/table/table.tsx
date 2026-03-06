@@ -314,6 +314,32 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
         return sorted;
     }, [filteredRows, sortRules, getCellText]);
 
+    const featureXCounts = useMemo(() => {
+        const counts: Record<string, number> = {};
+
+        for (const columnId of columnOrder) {
+            const definition = columnsById[columnId];
+            if (!definition || definition.filterType !== "feature") {
+                continue;
+            }
+            counts[columnId] = 0;
+        }
+
+        for (const row of filteredRows) {
+            for (const columnId of columnOrder) {
+                const definition = columnsById[columnId];
+                if (!definition || definition.filterType !== "feature") {
+                    continue;
+                }
+                if (hasYes(getCellText(row, columnId))) {
+                    counts[columnId] = (counts[columnId] ?? 0) + 1;
+                }
+            }
+        }
+
+        return counts;
+    }, [columnOrder, columnsById, filteredRows, getCellText]);
+
     const groupedHeaderSegments = useMemo(() => {
         const segments: { label: string; span: number; color: string }[] = [];
         for (const columnId of columnOrder) {
@@ -543,6 +569,22 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
                                         }
 
                                         return (
+                                            <th key={`count-${columnId}`} className={`count-row-th col col-${columnId}`}>
+                                                {definition.filterType === "feature" ? (
+                                                    <span className="feature-count-label">{featureXCounts[columnId] ?? 0}</span>
+                                                ) : null}
+                                            </th>
+                                        );
+                                    })}
+                                </tr>
+                                <tr className="filter-row">
+                                    {columnOrder.map((columnId) => {
+                                        const definition = columnsById[columnId];
+                                        if (!definition) {
+                                            return null;
+                                        }
+
+                                        return (
                                             <th key={`filter-${columnId}`} className={`col col-${columnId}`}>
                                                 {definition.filterType === "text" ? (
                                                     <input
@@ -687,6 +729,19 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           padding: 4px;
           background: #f9fafb;
           cursor: default;
+        }
+        .count-row-th {
+          height: auto;
+          padding: 3px 4px;
+          background: #f8fafc;
+          cursor: default;
+        }
+        .feature-count-label {
+          display: inline-block;
+          font-size: 0.68rem;
+          font-weight: 700;
+          color: #334155;
+          line-height: 1;
         }
         .dense-table td {
           height: 18px;

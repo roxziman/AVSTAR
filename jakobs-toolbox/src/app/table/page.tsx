@@ -13,6 +13,12 @@ const TABLE_GROUPS: DataTableGroup[] = [
                 initialWidth: 200,
                 filterType: "text",
             },
+            {
+                dataKey: "Year",
+                minWidth: 40,
+                initialWidth: 40,
+                filterType: "text",
+            },
         ],
     },
     {

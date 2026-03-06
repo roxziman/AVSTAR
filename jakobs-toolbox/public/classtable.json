@@ -1,6 +1,7 @@
 [
   {
     "AuthorYear": "Abraha et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "CV Risk Visualization for self-management of YOD",
     "Agnostic": null,
     "Medicine": "X",
@@ -33,6 +34,7 @@
   },
   {
     "AuthorYear": "Alebri et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Embellishments Revisited",
     "Agnostic": null,
     "Medicine": "X",
@@ -65,6 +67,7 @@
   },
   {
     "AuthorYear": "Allen 2018",
+    "Year": 2018,
     "Paper Nickname": "Visual brokerage",
     "Agnostic": null,
     "Medicine": null,
@@ -97,6 +100,7 @@
   },
   {
     "AuthorYear": "Ancker et al. 2009",
+    "Year": 2009,
     "Paper Nickname": "Interactive Graphics for Expressing Health Risks",
     "Agnostic": null,
     "Medicine": "X",
@@ -129,6 +133,7 @@
   },
   {
     "AuthorYear": "Anderson & Robinson 2022",
+    "Year": 2022,
     "Paper Nickname": "Affective congruence influences on categorical maps",
     "Agnostic": null,
     "Medicine": null,
@@ -161,6 +166,7 @@
   },
   {
     "AuthorYear": "Arunkumar et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Image or Information",
     "Agnostic": null,
     "Medicine": null,
@@ -193,6 +199,7 @@
   },
   {
     "AuthorYear": "Arunkumar et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Chart Communication Recall",
     "Agnostic": null,
     "Medicine": null,
@@ -225,6 +232,7 @@
   },
   {
     "AuthorYear": "Banks et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Data-driven outreach in Black communities",
     "Agnostic": null,
     "Medicine": null,
@@ -252,11 +260,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Blair et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Quantifying Emotional Responses",
     "Agnostic": "X",
     "Medicine": null,
@@ -289,6 +298,7 @@
   },
   {
     "AuthorYear": "Block et al. 2012",
+    "Year": 2012,
     "Paper Nickname": "DeepTree Exhibit",
     "Agnostic": null,
     "Medicine": null,
@@ -321,6 +331,7 @@
   },
   {
     "AuthorYear": "Boy et al. 2017",
+    "Year": 2017,
     "Paper Nickname": "Showing People Behind the Data",
     "Agnostic": null,
     "Medicine": null,
@@ -348,11 +359,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Campbell & Offenhuber 2022",
+    "Year": 2022,
     "Paper Nickname": "Feeling numbers",
     "Agnostic": null,
     "Medicine": null,
@@ -380,11 +392,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Concannon et al. 2020",
+    "Year": 2020,
     "Paper Nickname": "Brooke Leave Home",
     "Agnostic": null,
     "Medicine": null,
@@ -412,11 +425,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Davidson & Chesire 2025",
+    "Year": 2025,
     "Paper Nickname": "Personal narratives in thematic maps",
     "Agnostic": null,
     "Medicine": null,
@@ -449,6 +463,7 @@
   },
   {
     "AuthorYear": "Edgeley et al.2024",
+    "Year": 2024,
     "Paper Nickname": "Social and ethical considerations of wildefire vis",
     "Agnostic": null,
     "Medicine": null,
@@ -476,11 +491,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Ehmel et al. 2021",
+    "Year": 2021,
     "Paper Nickname": "Topography of Violence",
     "Agnostic": null,
     "Medicine": null,
@@ -508,11 +524,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Elhamdadi et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "VisTrust",
     "Agnostic": null,
     "Medicine": null,
@@ -540,11 +557,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Ferreira et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "VisTrust",
     "Agnostic": null,
     "Medicine": null,
@@ -572,11 +590,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Fox et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Quantifying Visualization Vibes",
     "Agnostic": null,
     "Medicine": null,
@@ -609,6 +628,7 @@
   },
   {
     "AuthorYear": "Fuest et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Nudging to societally favourable routes",
     "Agnostic": null,
     "Medicine": null,
@@ -641,6 +661,7 @@
   },
   {
     "AuthorYear": "Garretón et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Attitudinal Effects of DataVis and Illustrations",
     "Agnostic": null,
     "Medicine": null,
@@ -668,11 +689,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Giacomin & Bertola 2012",
+    "Year": 2012,
     "Paper Nickname": "Emotional response to energy vis",
     "Agnostic": null,
     "Medicine": null,
@@ -705,6 +727,7 @@
   },
   {
     "AuthorYear": "Hakone et al. 2017",
+    "Year": 2017,
     "Paper Nickname": "PROACT",
     "Agnostic": null,
     "Medicine": "X",
@@ -732,11 +755,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Harrison et al. 2013",
+    "Year": 2013,
     "Paper Nickname": "Affective Priming and Visual Judgment",
     "Agnostic": "X",
     "Medicine": null,
@@ -769,6 +793,7 @@
   },
   {
     "AuthorYear": "He et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Enthusiastic and Grounded, Avoidant and Cautious",
     "Agnostic": null,
     "Medicine": null,
@@ -801,6 +826,7 @@
   },
   {
     "AuthorYear": "Holder et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Must be a Tuesday",
     "Agnostic": null,
     "Medicine": null,
@@ -833,6 +859,7 @@
   },
   {
     "AuthorYear": "Jain et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Strollytelling",
     "Agnostic": null,
     "Medicine": null,
@@ -860,11 +887,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Kauer et al. 2021",
+    "Year": 2021,
     "Paper Nickname": "The Public Life of Data",
     "Agnostic": null,
     "Medicine": null,
@@ -897,6 +925,7 @@
   },
   {
     "AuthorYear": "Kaufmann et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Ripple Effect",
     "Agnostic": null,
     "Medicine": null,
@@ -924,11 +953,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Kennedy & Hill 2018",
+    "Year": 2018,
     "Paper Nickname": "The Feeling of Numbers",
     "Agnostic": null,
     "Medicine": null,
@@ -961,6 +991,7 @@
   },
   {
     "AuthorYear": "Kennedy et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Generic visuals in the news as public images",
     "Agnostic": null,
     "Medicine": null,
@@ -993,6 +1024,7 @@
   },
   {
     "AuthorYear": "Klettner 2024",
+    "Year": 2024,
     "Paper Nickname": "Cartographic Sign",
     "Agnostic": null,
     "Medicine": null,
@@ -1025,6 +1057,7 @@
   },
   {
     "AuthorYear": "Knoll et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "The Gulf of Interpretation",
     "Agnostic": null,
     "Medicine": null,
@@ -1057,6 +1090,7 @@
   },
   {
     "AuthorYear": "Koesten et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "How do digitial natives make sense of crisis maps?",
     "Agnostic": null,
     "Medicine": null,
@@ -1089,6 +1123,7 @@
   },
   {
     "AuthorYear": "Lan et al. 2021",
+    "Year": 2021,
     "Paper Nickname": "Smile or Scowl?",
     "Agnostic": null,
     "Medicine": null,
@@ -1121,6 +1156,7 @@
   },
   {
     "AuthorYear": "Lan et al. 2021",
+    "Year": 2021,
     "Paper Nickname": "Expressive Time-Oriented Stories",
     "Agnostic": null,
     "Medicine": null,
@@ -1153,6 +1189,7 @@
   },
   {
     "AuthorYear": "Lan et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Kineticharts",
     "Agnostic": null,
     "Medicine": null,
@@ -1185,6 +1222,7 @@
   },
   {
     "AuthorYear": "Li et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Artistic representations of data bridge divide over climate",
     "Agnostic": null,
     "Medicine": null,
@@ -1217,6 +1255,7 @@
   },
   {
     "AuthorYear": "Liem et al. 2020",
+    "Year": 2020,
     "Paper Nickname": "Structure and Empathy in Visual Data Storytelling",
     "Agnostic": null,
     "Medicine": null,
@@ -1244,11 +1283,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Lieske et al. 2014",
+    "Year": 2014,
     "Paper Nickname": "Climate Change Awareness",
     "Agnostic": null,
     "Medicine": null,
@@ -1276,11 +1316,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Markant et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Reducing Political Sectarianism",
     "Agnostic": null,
     "Medicine": null,
@@ -1308,11 +1349,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "McKinley et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Trustworthy by design",
     "Agnostic": null,
     "Medicine": null,
@@ -1345,6 +1387,7 @@
   },
   {
     "AuthorYear": "Mencarini et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Stories from the Peaks",
     "Agnostic": null,
     "Medicine": null,
@@ -1372,11 +1415,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Mittenentzwei et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Do Disease Stories Need a Hero",
     "Agnostic": null,
     "Medicine": "X",
@@ -1404,11 +1448,12 @@
     "Infographic": "X",
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Moin et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "VR for Cervical Cancer Education",
     "Agnostic": null,
     "Medicine": "X",
@@ -1436,11 +1481,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Morais et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "How Vis design and situatedness evoke compassion",
     "Agnostic": null,
     "Medicine": null,
@@ -1473,6 +1519,7 @@
   },
   {
     "AuthorYear": "Morini et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "From Shock to Shift",
     "Agnostic": null,
     "Medicine": null,
@@ -1500,11 +1547,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Oh et al. 2018",
+    "Year": 2018,
     "Paper Nickname": "Harnessing the persuasive potential of data",
     "Agnostic": null,
     "Medicine": "X",
@@ -1537,6 +1585,7 @@
   },
   {
     "AuthorYear": "Pfeiffer et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Electricy make happy",
     "Agnostic": null,
     "Medicine": null,
@@ -1569,6 +1618,7 @@
   },
   {
     "AuthorYear": "Pirani et al. 2020",
+    "Year": 2020,
     "Paper Nickname": "Feminist cartography and the SDGs",
     "Agnostic": null,
     "Medicine": null,
@@ -1601,6 +1651,7 @@
   },
   {
     "AuthorYear": "Rogha et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Elicitation and Contrasting Narratives on Engagement, Recall and Attitude Change with News Articles Containing Data Visualization",
     "Agnostic": null,
     "Medicine": null,
@@ -1633,6 +1684,7 @@
   },
   {
     "AuthorYear": "Romat et al. 2020",
+    "Year": 2020,
     "Paper Nickname": "Dear Pictograph",
     "Agnostic": "X",
     "Medicine": null,
@@ -1660,11 +1712,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Sakamoto et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Persuasive Data Storytelling with a Data Video during Covid-19 Infodemic",
     "Agnostic": null,
     "Medicine": null,
@@ -1697,6 +1750,7 @@
   },
   {
     "AuthorYear": "Sallam et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Towards Design Guidelines for Effective Health-Related Data Videos",
     "Agnostic": null,
     "Medicine": "X",
@@ -1729,6 +1783,7 @@
   },
   {
     "AuthorYear": "Schuster et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Being simple on complex issues",
     "Agnostic": null,
     "Medicine": null,
@@ -1756,11 +1811,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Song et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Visualizing Trust",
     "Agnostic": null,
     "Medicine": null,
@@ -1793,6 +1849,7 @@
   },
   {
     "AuthorYear": "Sorapure 2023",
+    "Year": 2023,
     "Paper Nickname": "Actionability of data dashboards",
     "Agnostic": null,
     "Medicine": null,
@@ -1820,11 +1877,12 @@
     "Infographic": null,
     "Dashboard": "X",
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Strain et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Alternative scatterplot designs",
     "Agnostic": null,
     "Medicine": "X",
@@ -1852,11 +1910,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Van Den Bosch et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Meer Weer",
     "Agnostic": null,
     "Medicine": null,
@@ -1889,6 +1948,7 @@
   },
   {
     "AuthorYear": "Van Koningsbruggen & Hornecker 2021",
+    "Year": 2021,
     "Paper Nickname": "It's Just a Graph",
     "Agnostic": null,
     "Medicine": null,
@@ -1921,6 +1981,7 @@
   },
   {
     "AuthorYear": "Wei et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "At the Peak",
     "Agnostic": "X",
     "Medicine": null,
@@ -1953,6 +2014,7 @@
   },
   {
     "AuthorYear": "Wu et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Data, Data, Everywhere",
     "Agnostic": null,
     "Medicine": null,
@@ -1985,6 +2047,7 @@
   },
   {
     "AuthorYear": "Xie et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Creating Emordle",
     "Agnostic": "X",
     "Medicine": null,
@@ -2012,11 +2075,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": "X"
   },
   {
     "AuthorYear": "Yang et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "Swaying the Public?",
     "Agnostic": null,
     "Medicine": null,
@@ -2044,11 +2108,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": "X"
   },
   {
     "AuthorYear": "Zamil et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "A Persuasive Approach to Raise Climate Change Awareness",
     "Agnostic": null,
     "Medicine": null,
@@ -2076,11 +2141,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Zhang et al. 2021",
+    "Year": 2021,
     "Paper Nickname": "Affective Colormap Design for MWT",
     "Agnostic": null,
     "Medicine": null,
@@ -2113,6 +2179,7 @@
   },
   {
     "AuthorYear": "Zhang et al. 2023",
+    "Year": 2023,
     "Paper Nickname": "Accepting the Digital Challenge",
     "Agnostic": null,
     "Medicine": null,
@@ -2145,6 +2212,7 @@
   },
   {
     "AuthorYear": "Zhao et al. 2022",
+    "Year": 2022,
     "Paper Nickname": "Visualization as infrastructure",
     "Agnostic": null,
     "Medicine": null,
@@ -2177,6 +2245,7 @@
   },
   {
     "AuthorYear": "Zhu et al. 2024",
+    "Year": 2024,
     "Paper Nickname": "From reader to experiencer",
     "Agnostic": null,
     "Medicine": null,
@@ -2204,11 +2273,12 @@
     "Infographic": null,
     "Dashboard": null,
     "Multiple": null,
-    "Interactivity": null,
+    "Interactivity": "X",
     "Animation": null
   },
   {
     "AuthorYear": "Zou et al. 2025",
+    "Year": 2025,
     "Paper Nickname": "Campus cultural landscape map",
     "Agnostic": null,
     "Medicine": null,
