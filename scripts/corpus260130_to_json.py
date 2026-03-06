@@ -91,6 +91,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     desired_columns = ["AuthorYear",
+                       "Year",
                        "Paper Nickname",
                        "Agnostic",
                        "Medicine",
@@ -118,6 +119,13 @@ def main(argv: list[str] | None = None) -> int:
                        "Infographic",
                        "Dashboard",
                        "Multiple",
+                       "Real-World",
+                       "Synthetic",
+                       "In-the-Wild",
+                       "Custom",
+                       "Quantitative",
+                       "Qualitative",
+                       "Mixed",
                        "Interactivity",
                        "Animation"
                        ]

@@ -19,6 +19,7 @@ const TABLE_GROUPS: DataTableGroup[] = [
                 initialWidth: 40,
                 filterType: "text",
             },
+            
         ],
     },
     {
@@ -68,15 +69,33 @@ const TABLE_GROUPS: DataTableGroup[] = [
         ],
     },
     {
+        name: "Emotional Valence",
+        color: "#ffd92f",
+        columns: [
+            {
+                dataKey: "Negative",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Neutral",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Positive",
+                filterType: "feature",
+            },
+        ]
+    },
+    {
         name: "Features",
         color: "#66c2a5",
         columns: [
             {
-                dataKey: "chart",
+                dataKey: "Chart",
                 filterType: "feature",
             },
             {
-                dataKey: "graph",
+                dataKey: "Graph",
                 filterType: "feature",
             },
             {
@@ -96,6 +115,34 @@ const TABLE_GROUPS: DataTableGroup[] = [
                 filterType: "feature",
             },
             {
+                dataKey: "Word Cloud",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Image",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Scientific Illustration",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Video",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Infographic",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Dashboard",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Multiple",
+                filterType: "feature",
+            },
+            {
                 dataKey: "Interactivity",
                 filterType: "feature",
             },
@@ -105,6 +152,34 @@ const TABLE_GROUPS: DataTableGroup[] = [
             },
         ],
     },
+    {
+        name: "Data Source",
+        color: "#e78ac3",
+        columns: [
+            {
+                dataKey: "Real-World",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Synthetic",
+                filterType: "feature",
+            },
+        ]
+    },
+    {
+        name: "Vis Source",
+        color: "#a6d854",
+        columns: [
+            {
+                dataKey: "In-the-Wild",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Custom",
+                filterType: "feature",
+            },
+        ]
+    }
 ];
 
 const TABLE_DATA_URL = "/classtable.json";
