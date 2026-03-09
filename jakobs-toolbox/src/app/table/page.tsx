@@ -9,14 +9,20 @@ const TABLE_GROUPS: DataTableGroup[] = [
         columns: [
             {
                 dataKey: "AuthorYear",
-                minWidth: 120,
-                initialWidth: 200,
+                minWidth: 100,
+                initialWidth: 150,
                 filterType: "text",
             },
             {
                 dataKey: "Year",
-                minWidth: 40,
-                initialWidth: 40,
+                minWidth: 50,
+                initialWidth: 50,
+                filterType: "text",
+            },
+            {
+                dataKey: "Paper Nickname",
+                minWidth: 120,
+                initialWidth: 200,
                 filterType: "text",
             },
             
@@ -87,7 +93,7 @@ const TABLE_GROUPS: DataTableGroup[] = [
         ]
     },
     {
-        name: "Features",
+        name: "Visual Idiom",
         color: "#66c2a5",
         columns: [
             {
@@ -179,7 +185,145 @@ const TABLE_GROUPS: DataTableGroup[] = [
                 filterType: "feature",
             },
         ]
-    }
+    },
+    {
+        name: "Element Studied",
+        color: "#cab2d6",
+        columns: [
+            {
+                dataKey: "Topic",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Vis Type",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Design Element",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Visual Style/Embellishment",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Narrative Element",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Interaction",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Animation",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Presentation Format",
+                filterType: "feature",
+            },
+            {
+                dataKey: "In-the-Wild Examples",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Various",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Affective Priming/Elicitation",
+                filterType: "feature",
+            },
+        ]
+    },
+    {
+        name: "Study Type",
+        color: "#fb8072",
+        columns: [
+            {
+                dataKey: "Quantitative",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Qualitative",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Mixed",
+                filterType: "feature",
+            },
+        ]
+    },        
+    {
+        name: "Study Instruments",
+        color: "#fb8150",
+        columns: [
+            {
+                dataKey: "Custom Questionnaire",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Adapted Questionnaire",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Semi-structured Interview",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Short Interview",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Affective Slider/Self-Assessment Manikin",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Geneva Emotion Wheel",
+                filterType: "feature",
+            },
+            {
+                dataKey: "PANAS",
+                filterType: "feature",
+            },
+            {
+                dataKey: "VLAT",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Observation",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Think Aloud",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Diary Study",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Eye-tracking",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Facial expression recognition",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Biometric",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Workshop",
+                filterType: "feature",
+            },
+            {
+                dataKey: "Other validated psychology measure",
+                filterType: "feature",
+            },
+        ]
+    },
 ];
 
 const TABLE_DATA_URL = "/classtable.json";

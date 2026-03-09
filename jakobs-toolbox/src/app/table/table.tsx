@@ -657,11 +657,11 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
             <style jsx>{`
         .page {
           min-height: 100vh;
-          padding: 24px;
+          padding: 12px;
           background: #f5f7fa;
         }
         .container {
-          // max-width: 320px;
+          // max-width: 300px;
           width: min-content;
           margin: 0 auto;
         }
@@ -697,26 +697,27 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
         }
         .dense-table {
           width: 100%;
+          //overflow-x: 100%;
           border-collapse: collapse;
-          table-layout: fixed;
+          //table-layout: fixed;
         }
         .group-row .group-th {
-          height: 24px;
-          padding: 2px 4px;
+          height:24px;
+          padding: 0px 4px;
           vertical-align: middle;
           text-align: center;
           background: #eef2ff;
           cursor: default;
         }
         .group-label {
-          font-size: 0.72rem;
+          font-size: 0.60rem;
           font-weight: 700;
           letter-spacing: 0.02em;
           text-transform: uppercase;
           color: #334155;
         }
         .dense-table th {
-          padding: 2px;
+          padding: 0px;
           vertical-align: bottom;
           text-align: center;
           background: #f8fafc;
@@ -726,31 +727,31 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
         }
         .filter-row th {
           height: auto;
-          padding: 4px;
+          padding: 0px;
           background: #f9fafb;
           cursor: default;
         }
         .count-row-th {
           height: auto;
-          padding: 3px 4px;
+          padding: 2px 4px;
           background: #f8fafc;
           cursor: default;
         }
         .feature-count-label {
           display: inline-block;
-          font-size: 0.68rem;
+          font-size: 0.60rem;
           font-weight: 700;
           color: #334155;
           line-height: 1;
         }
         .dense-table td {
-          height: 18px;
-        //   padding: 1px 4px;
-          font-size: 0.8rem;
-          line-height: 0.8rem;
+          height: 16px;
+        //   padding: 1px 6px;
+          font-size: 0.75rem;
+          line-height: 0.5rem;
         }
         .col {
-          max-width: 350px;
+          max-width: 200px;
           min-width: 10px;
           text-align: left;
           white-space: nowrap;
@@ -765,9 +766,11 @@ export default function Table({ groups, dataUrl, title }: DataTableProps) {
           writing-mode: vertical-rl;
           transform: rotate(180deg);
           white-space: nowrap;
-          font-weight: 700;
+          font-weight: 550;
           line-height: 1.1;
           font-size: small;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .sort-indicator {
           display: flex;
